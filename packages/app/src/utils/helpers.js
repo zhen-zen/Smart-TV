@@ -94,3 +94,27 @@ export const getLogoUrl = (serverUrl, item, options = {}) => {
 
 	return null;
 };
+
+/**
+ * Converts Overview HTML to plain text while preserving line breaks
+ * Removes all HTML tags except converts <br> tags to newlines
+ */
+export const sanitizeOverviewHtml = (text) => {
+	if (!text) return '';
+	return String(text)
+		// Convert <br> tags to newlines (handle various formats)
+		.replace(/<br\s*\/?>/gi, '\n')
+		// Remove all other HTML tags
+		.replace(/<[^>]+>/g, '')
+		// Decode common HTML entities
+		.replace(/&nbsp;/gi, ' ')
+		.replace(/&amp;/gi, '&')
+		.replace(/&lt;/gi, '<')
+		.replace(/&gt;/gi, '>')
+		.replace(/&quot;/gi, '"')
+		.replace(/&#39;/gi, "'")
+		.replace(/&apos;/gi, "'")
+		// Clean up excessive whitespace but preserve single newlines
+		.replace(/\n{3,}/g, '\n\n')
+		.trim();
+};
