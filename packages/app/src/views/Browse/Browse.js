@@ -9,7 +9,7 @@ import SeerrTileRow from '../../components/SeerrTileRow';
 import {getSeerrHomeRowConfigs, fetchSeerrHomeRow} from '../../utils/seerrHomeRows';
 import {mergeRowPreservingRefs} from '../../utils/volatileRows';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import {getImageUrl, getBackdropId, getLogoUrl} from '../../utils/helpers';
+import {getImageUrl, getBackdropId, getLogoUrl, sanitizeOverviewHtml} from '../../utils/helpers';
 import {getFromStorage, saveToStorage} from '../../services/storage';
 import {HOME_ROW_ITEM_FIELDS} from '../../services/jellyfinApi';
 import * as connectionPool from '../../services/connectionPool';
@@ -235,7 +235,7 @@ const stripItemForCache = (item) => ({
 	CommunityRating: item.CommunityRating,
 	Genres: item.Genres,
 	GenreItems: item.GenreItems,
-	Overview: item.Overview,
+	Overview: sanitizeOverviewHtml(item.Overview),
 	ProductionYear: item.ProductionYear,
 	RunTimeTicks: item.RunTimeTicks,
 	AlbumId: item.AlbumId,
